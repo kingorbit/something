@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { tasks as tasksData } from "../data/tasks";
 
 export function TaskList(){
     const [tasks, setTasks] = useState([]);
+    const titleRef = useRef(null);
 
-    const handleAddTask = (title) =>{
+    const handleAddTask = () =>{
          const newTasks = [... tasks];
          newTasks.push({
-           title: title,
+           title: titleRef.current.value,
            description: 'zrob cos mordeczko',
            completed: false, 
          });
@@ -29,7 +30,8 @@ export function TaskList(){
 
     return ( 
         <>
-         <button onClick={() => handleAddTask('Dodano cos do zrobienia')}>Dodaj zadanie</button>
+        <input type="text" id="title" ref={titleRef} />
+         <button onClick={handleAddTask}>Dodaj zadanie</button>
         
         {tasks.length === 0 ? (
         <div>Nie masz żadnych zadań wariacie</div>
